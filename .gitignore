@@ -11,7 +11,6 @@ sdk/dist/
 sdk/node_modules
 dist
 artifacts
-generated/
 .docusaurus
 .cache-loader
 .devcontainer
