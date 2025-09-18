@@ -10,10 +10,8 @@
 
 use std::error::Error;
 
-use solana_client::{
-    nonblocking::rpc_client::RpcClient,
-    rpc_filter::{Memcmp, RpcFilterType},
-};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client_api::filter::{Memcmp, RpcFilterType};
 use solana_pubkey::Pubkey;
 
 use crate::{generated::shared::DecodedAccount, LimitOrder, LIMIT_ORDER_DISCRIMINATOR};

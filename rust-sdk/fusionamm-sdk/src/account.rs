@@ -11,7 +11,8 @@
 use serde::Deserialize;
 use serde_json::from_value;
 use solana_account_decoder::UiAccountData;
-use solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client_api::request::TokenAccountsFilter;
 use solana_program::pubkey::Pubkey;
 use solana_program::rent::Rent;
 use solana_program::sysvar::SysvarId;

@@ -14,7 +14,8 @@ use fusionamm_client::{
 };
 use fusionamm_core::POSITION_BUNDLE_SIZE;
 use solana_account::Account;
-use solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client_api::request::TokenAccountsFilter;
 use solana_pubkey::Pubkey;
 use std::{collections::HashMap, error::Error};
 
@@ -124,7 +125,7 @@ fn get_position_in_bundle_addresses(position_bundle: &PositionBundle) -> Vec<Pub
 /// # Example
 /// ```rust
 /// use fusionamm_sdk::fetch_positions_for_owner;
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_keypair::Keypair;
 /// use solana_pubkey::pubkey;
 /// use solana_signer::Signer;
@@ -262,7 +263,7 @@ pub async fn fetch_positions_for_owner(rpc: &RpcClient, owner: Pubkey) -> Result
 /// use fusionamm_sdk::{
 ///     fetch_positions_in_fusion_pool,
 /// };
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_keypair::Keypair;
 /// use solana_pubkey::pubkey;
 /// use solana_signer::Signer;

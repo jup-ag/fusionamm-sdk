@@ -10,7 +10,7 @@ use fusionamm_core::{
     decrease_limit_order_quote, get_initializable_tick_index, get_tick_array_start_tick_index, price_to_tick_index, try_reverse_apply_transfer_fee,
     LimitOrderDecreaseQuote,
 };
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_keypair::Keypair;
 use solana_program::instruction::Instruction;
 use solana_program::program_pack::Pack;
@@ -99,7 +99,7 @@ pub struct DecreaseLimitOrderInstruction {
 ///
 /// ```rust
 /// use fusionamm_sdk::{open_limit_order_instructions, PriceOrTickIndex};
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -412,7 +412,7 @@ pub async fn increase_limit_order_instructions(
 ///
 /// ```rust
 /// use fusionamm_sdk::close_limit_order_instructions;
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -475,7 +475,7 @@ pub async fn close_limit_order_instructions(
 ///
 /// ```rust
 /// use fusionamm_sdk::decrease_limit_order_instructions;
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -632,7 +632,7 @@ mod tests {
     use fusionamm_client::{get_limit_order_address, LimitOrder};
     use rstest::rstest;
     use serial_test::serial;
-    use solana_client::nonblocking::rpc_client::RpcClient;
+    use solana_rpc_client::nonblocking::rpc_client::RpcClient;
     use solana_keypair::Keypair;
     use solana_program::program_pack::Pack;
     use solana_program_test::tokio;

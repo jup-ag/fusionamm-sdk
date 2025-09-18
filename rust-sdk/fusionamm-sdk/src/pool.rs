@@ -9,7 +9,7 @@
 //
 
 use fusionamm_client::{fetch_all_fusion_pool_with_filter, get_fusion_pool_address, DecodedAccount, FusionPool, FusionPoolFilter};
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_program::pubkey::Pubkey;
 use std::error::Error;
 

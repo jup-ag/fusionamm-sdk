@@ -11,10 +11,12 @@ use crate::PriorityFeeLevel;
 use log::warn;
 use rand::Rng;
 use reqwest::Client;
-use solana_client::client_error::{ClientError, ClientErrorKind};
-use solana_client::nonblocking::rpc_client::RpcClient;
-use solana_client::rpc_config::{RpcSendTransactionConfig, RpcSimulateTransactionConfig};
-use solana_client::rpc_response::{Response, RpcSimulateTransactionResult};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client_api::{
+    client_error::{Error as ClientError, ErrorKind as ClientErrorKind},
+    config::{RpcSendTransactionConfig, RpcSimulateTransactionConfig},
+    response::{Response, RpcSimulateTransactionResult},
+};
 use solana_commitment_config::{CommitmentConfig, CommitmentLevel};
 use solana_compute_budget_interface::ComputeBudgetInstruction;
 use solana_instruction::{AccountMeta, Instruction};

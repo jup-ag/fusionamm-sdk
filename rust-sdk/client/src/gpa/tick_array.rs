@@ -10,7 +10,7 @@
 
 use std::error::Error;
 
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_pubkey::Pubkey;
 
 use crate::{DecodedAccount, TickArray};

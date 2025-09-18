@@ -23,7 +23,7 @@ use fusionamm_core::{
     increase_liquidity_quote_b, order_tick_indexes, price_to_tick_index, IncreaseLiquidityQuote, TransferFee,
 };
 use solana_account::Account;
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_instruction::Instruction;
 use solana_keypair::Keypair;
 use solana_program::program_pack::Pack;
@@ -151,7 +151,7 @@ pub struct IncreaseLiquidityInstruction {
 ///
 /// ```rust
 /// use fusionamm_sdk::{ increase_liquidity_instructions, IncreaseLiquidityParam };
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -508,7 +508,7 @@ async fn internal_open_position(
 /// # Example
 ///
 /// ```rust
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use fusionamm_sdk::{open_full_range_position_instructions, IncreaseLiquidityParam};
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
@@ -600,7 +600,7 @@ pub async fn open_full_range_position_instructions(
 ///
 /// ```rust
 /// use fusionamm_sdk::{open_position_instructions, IncreaseLiquidityParam, PriceOrTickIndex};
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -698,7 +698,7 @@ mod tests {
     };
 
     use crate::tests::setup_position;
-    use solana_client::nonblocking::rpc_client::RpcClient;
+    use solana_rpc_client::nonblocking::rpc_client::RpcClient;
     use solana_keypair::Keypair;
     use solana_program::program_pack::Pack;
     use solana_pubkey::Pubkey;
