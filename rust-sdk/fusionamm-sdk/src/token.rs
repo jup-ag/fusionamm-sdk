@@ -11,7 +11,7 @@
 use crate::{NativeMintWrappingStrategy, NATIVE_MINT_WRAPPING_STRATEGY};
 use fusionamm_core::TransferFee;
 use solana_account::Account as SolanaAccount;
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_instruction::Instruction;
 use solana_keypair::Keypair;
 use solana_program::hash::hashv;

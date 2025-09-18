@@ -10,8 +10,8 @@
 
 use std::error::Error;
 
-use solana_client::nonblocking::rpc_client::RpcClient;
-use solana_client::rpc_filter::{Memcmp, RpcFilterType};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client_api::filter::{Memcmp, RpcFilterType};
 use solana_pubkey::Pubkey;
 
 use super::fetch_decoded_program_accounts;

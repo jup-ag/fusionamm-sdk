@@ -15,7 +15,7 @@ use fusionamm_client::{get_fusion_pool_address, get_fusion_pools_config_address,
 use fusionamm_client::{FusionPool, TickArray};
 use fusionamm_client::{InitializePool, InitializePoolInstructionArgs, InitializeTickArray, InitializeTickArrayInstructionArgs};
 use fusionamm_core::{get_full_range_tick_indexes, get_tick_array_start_tick_index, price_to_sqrt_price, sqrt_price_to_tick_index};
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_keypair::Keypair;
 use solana_program::rent::Rent;
 use solana_program::sysvar::SysvarId;
@@ -74,7 +74,7 @@ pub struct CreatePoolInstructions {
 ///
 /// ```
 /// use fusionamm_sdk::create_fusion_pool_instructions;
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_keypair::Keypair;
 /// use solana_pubkey::pubkey;
 /// use solana_signer::Signer;

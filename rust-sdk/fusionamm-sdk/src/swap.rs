@@ -19,7 +19,7 @@ use fusionamm_core::{
     get_tick_array_start_tick_index, swap_quote_by_input_token, swap_quote_by_output_token, ExactInSwapQuote, ExactOutSwapQuote, TickArrayFacade,
     TickFacade, TICK_ARRAY_SIZE,
 };
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_instruction::{AccountMeta, Instruction};
 use solana_keypair::Keypair;
 use solana_pubkey::Pubkey;
@@ -151,7 +151,7 @@ async fn fetch_tick_arrays_or_default(
 ///
 /// ```rust
 /// use fusionamm_sdk::{swap_instructions, SwapType};
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use std::str::FromStr;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
@@ -321,7 +321,7 @@ mod tests {
 
     use rstest::rstest;
     use serial_test::serial;
-    use solana_client::nonblocking::rpc_client::RpcClient;
+    use solana_rpc_client::nonblocking::rpc_client::RpcClient;
     use solana_keypair::Keypair;
     use solana_program::program_pack::Pack;
     use solana_program_test::tokio;

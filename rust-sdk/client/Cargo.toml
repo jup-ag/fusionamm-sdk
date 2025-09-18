@@ -21,7 +21,8 @@ solana-v1 = []
 
 [dependencies]
 # Solana
-solana-client = { version = "^2.2" }
+solana-rpc-client = { version = "^2.2" }
+solana-rpc-client-api = { version = "^2.2" }
 solana-account-decoder = { version = "^2.2" }
 solana-account = { version = "^2.2" }
 solana-program = { version = "^2.2" }

@@ -18,7 +18,7 @@ use fusionamm_core::{
     collect_fees_quote, decrease_liquidity_quote, decrease_liquidity_quote_a, decrease_liquidity_quote_b, get_tick_array_start_tick_index,
     get_tick_index_in_array, CollectFeesQuote, DecreaseLiquidityQuote,
 };
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_instruction::Instruction;
 use solana_keypair::Keypair;
 use solana_pubkey::Pubkey;
@@ -90,7 +90,7 @@ pub struct DecreaseLiquidityInstruction {
 /// use fusionamm_sdk::{
 ///     decrease_liquidity_instructions, DecreaseLiquidityParam
 /// };
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -297,7 +297,7 @@ pub struct ClosePositionInstruction {
 ///
 /// ```rust
 /// use fusionamm_sdk::close_position_instructions;
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -500,7 +500,7 @@ mod tests {
 
     use rstest::rstest;
     use serial_test::serial;
-    use solana_client::nonblocking::rpc_client::RpcClient;
+    use solana_rpc_client::nonblocking::rpc_client::RpcClient;
     use solana_keypair::Keypair;
     use solana_program::program_pack::Pack;
     use solana_program_test::tokio;

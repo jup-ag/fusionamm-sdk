@@ -75,7 +75,7 @@ impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for FusionPool {
 
 #[cfg(feature = "fetch")]
 pub fn fetch_fusion_pool(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::DecodedAccount<FusionPool>, std::io::Error> {
   let accounts = fetch_all_fusion_pool(rpc, &[*address])?;
@@ -84,7 +84,7 @@ pub fn fetch_fusion_pool(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_fusion_pool(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::DecodedAccount<FusionPool>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)
@@ -102,7 +102,7 @@ pub fn fetch_all_fusion_pool(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_fusion_pool(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::MaybeAccount<FusionPool>, std::io::Error> {
     let accounts = fetch_all_maybe_fusion_pool(rpc, &[*address])?;
@@ -111,7 +111,7 @@ pub fn fetch_maybe_fusion_pool(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_fusion_pool(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::MaybeAccount<FusionPool>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)

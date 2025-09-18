@@ -1493,7 +1493,6 @@ dependencies = [
  "solana-account",
  "solana-account-decoder",
  "solana-account-info",
- "solana-client",
  "solana-cpi",
  "solana-decode-error",
  "solana-instruction",
@@ -1502,6 +1501,8 @@ dependencies = [
  "solana-program-entrypoint",
  "solana-program-error",
  "solana-pubkey",
+ "solana-rpc-client",
+ "solana-rpc-client-api",
  "thiserror 2.0.15",
 ]
 
@@ -1540,7 +1541,6 @@ dependencies = [
  "serial_test",
  "solana-account",
  "solana-account-decoder",
- "solana-client",
  "solana-commitment-config",
  "solana-epoch-info",
  "solana-instruction",
@@ -1550,6 +1550,8 @@ dependencies = [
  "solana-program-error",
  "solana-program-test",
  "solana-pubkey",
+ "solana-rpc-client",
+ "solana-rpc-client-api",
  "solana-sdk-ids",
  "solana-signature",
  "solana-signer",

@@ -48,7 +48,7 @@ impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for TickArray {
 
 #[cfg(feature = "fetch")]
 pub fn fetch_tick_array(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::DecodedAccount<TickArray>, std::io::Error> {
   let accounts = fetch_all_tick_array(rpc, &[*address])?;
@@ -57,7 +57,7 @@ pub fn fetch_tick_array(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_tick_array(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::DecodedAccount<TickArray>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)
@@ -75,7 +75,7 @@ pub fn fetch_all_tick_array(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_tick_array(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::MaybeAccount<TickArray>, std::io::Error> {
     let accounts = fetch_all_maybe_tick_array(rpc, &[*address])?;
@@ -84,7 +84,7 @@ pub fn fetch_maybe_tick_array(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_tick_array(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::MaybeAccount<TickArray>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)

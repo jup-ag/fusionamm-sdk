@@ -56,7 +56,7 @@ impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for Position {
 
 #[cfg(feature = "fetch")]
 pub fn fetch_position(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::DecodedAccount<Position>, std::io::Error> {
   let accounts = fetch_all_position(rpc, &[*address])?;
@@ -65,7 +65,7 @@ pub fn fetch_position(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_position(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::DecodedAccount<Position>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)
@@ -83,7 +83,7 @@ pub fn fetch_all_position(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_position(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::MaybeAccount<Position>, std::io::Error> {
     let accounts = fetch_all_maybe_position(rpc, &[*address])?;
@@ -92,7 +92,7 @@ pub fn fetch_maybe_position(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_position(
-  rpc: &solana_client::rpc_client::RpcClient,
+  rpc: &solana_rpc_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::MaybeAccount<Position>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)

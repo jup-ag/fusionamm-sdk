@@ -16,7 +16,8 @@ default = []
 
 [dependencies]
 # Solana
-solana-client = { version = "^2.2" }
+solana-rpc-client = { version = "^2.2" }
+solana-rpc-client-api = { version = "^2.2" }
 solana-program = { version = "^2.2" }
 solana-pubkey = { version = "^2.2" }
 solana-instruction = { version = "^2.2" }

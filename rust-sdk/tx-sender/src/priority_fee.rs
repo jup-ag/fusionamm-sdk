@@ -5,8 +5,8 @@
 // See the LICENSE file in the project root for license information.
 //
 
-use solana_client::client_error::ClientError;
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client_api::client_error::Error as ClientError;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_pubkey::Pubkey;
 use std::collections::HashMap;
 

@@ -18,15 +18,12 @@ use fusionamm_client::{get_fusion_pools_config_address, FUSIONAMM_ID, FUSION_POO
 use serde_json::{from_value, to_value, Value};
 use solana_account::Account;
 use solana_account_decoder::{encode_ui_account, UiAccountEncoding};
-use solana_client::client_error::Result as ClientResult;
-use solana_client::{
-    client_error::{ClientError, ClientErrorKind},
-    nonblocking::rpc_client::RpcClient,
-    rpc_client::{RpcClientConfig, SerializableTransaction},
-    rpc_request::RpcRequest,
-    rpc_response::{Response, RpcBlockhash, RpcResponseContext, RpcVersionInfo},
-    rpc_sender::{RpcSender, RpcTransportStats},
-};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::rpc_client::{RpcClientConfig, SerializableTransaction};
+use solana_rpc_client::rpc_sender::{RpcSender, RpcTransportStats};
+use solana_rpc_client_api::client_error::{Error as ClientError, ErrorKind as ClientErrorKind, Result as ClientResult};
+use solana_rpc_client_api::request::RpcRequest;
+use solana_rpc_client_api::response::{Response, RpcBlockhash, RpcResponseContext, RpcVersionInfo};
 use solana_commitment_config::CommitmentLevel;
 use solana_epoch_info::EpochInfo;
 use solana_instruction::Instruction;

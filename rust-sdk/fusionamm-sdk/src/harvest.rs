@@ -15,7 +15,7 @@ use crate::{
 use fusionamm_client::{get_position_address, get_tick_array_address, FusionPool, Position, TickArray};
 use fusionamm_client::{CollectFees, CollectFeesInstructionArgs, UpdateFees};
 use fusionamm_core::{collect_fees_quote, get_tick_array_start_tick_index, get_tick_index_in_array, CollectFeesQuote};
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_instruction::Instruction;
 use solana_keypair::Keypair;
 use solana_pubkey::Pubkey;
@@ -74,7 +74,7 @@ pub struct HarvestPositionInstruction {
 ///
 /// ```rust
 /// use fusionamm_sdk::harvest_position_instructions;
-/// use solana_client::nonblocking::rpc_client::RpcClient;
+/// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 /// use solana_pubkey::pubkey;
 /// use solana_keypair::Keypair;
 /// use solana_signer::Signer;
@@ -222,7 +222,7 @@ mod tests {
 
     use fusionamm_client::{get_position_address, Position};
     use serial_test::serial;
-    use solana_client::nonblocking::rpc_client::RpcClient;
+    use solana_rpc_client::nonblocking::rpc_client::RpcClient;
     use solana_program_test::tokio;
     use spl_token::state::Account as TokenAccount;
     use spl_token_2022::{extension::StateWithExtensionsOwned, state::Account as TokenAccount2022, ID as TOKEN_2022_PROGRAM_ID};
@@ -241,7 +241,7 @@ mod tests {
     use solana_pubkey::Pubkey;
     use solana_signer::Signer;
 
-    async fn fetch_position(rpc: &solana_client::nonblocking::rpc_client::RpcClient, position_pubkey: Pubkey) -> Result<Position, Box<dyn Error>> {
+    async fn fetch_position(rpc: &solana_rpc_client::nonblocking::rpc_client::RpcClient, position_pubkey: Pubkey) -> Result<Position, Box<dyn Error>> {
         let account = rpc.get_account(&position_pubkey).await?;
         Ok(Position::from_bytes(&account.data)?)
     }
