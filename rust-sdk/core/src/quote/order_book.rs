@@ -8,7 +8,7 @@
 use crate::quote::get_next_liquidity;
 use crate::{
     get_limit_order_output_amount, price_to_sqrt_price, sqrt_price_to_price, tick_index_to_sqrt_price, CoreError, FusionPoolFacade,
-    TickArraySequence, MAX_SQRT_PRICE, MIN_SQRT_PRICE,
+    TickArraySequence, MAX_SQRT_PRICE, MIN_SQRT_PRICE, ORDER_BOOK_ENTRY_LIMIT_EXCEEDED, PRICE_STEP_TOO_SMALL,
 };
 
 #[derive(Debug)]
@@ -51,8 +51,12 @@ pub fn get_order_book_side(
     decimals_b: u8,
 ) -> Result<Vec<OrderBookEntry>, CoreError> {
     let price_step_abs = price_step.abs();
-    assert!(price_step_abs >= 0.0000000000001, "price_step is too small");
-    assert!(max_num_entries <= 100, "the maximum allowed number of entries is too large");
+    if price_step_abs < 0.0000000000001 {
+        return Err(PRICE_STEP_TOO_SMALL);
+    }
+    if max_num_entries > 100 {
+        return Err(ORDER_BOOK_ENTRY_LIMIT_EXCEEDED);
+    }
 
     // a_to_b is false (ASK side) if the price_step is positive and not inverted.
     let a_to_b = (price_step < 0.0) != invert_price;
@@ -212,7 +216,7 @@ pub fn try_get_amount_delta_a_and_b(sqrt_price_1_x64: u128, sqrt_price_2_x64: u1
 mod order_book_tests {
     use crate::{
         get_order_book_side, increase_liquidity_quote_a, increase_liquidity_quote_b, price_to_sqrt_price, sqrt_price_to_tick_index, FusionPoolFacade,
-        TickArrayFacade, TickArraySequence, TickFacade, TICK_ARRAY_SIZE,
+        TickArrayFacade, TickArraySequence, TickFacade, TICK_ARRAY_SIZE, ORDER_BOOK_ENTRY_LIMIT_EXCEEDED, PRICE_STEP_TOO_SMALL,
     };
 
     fn test_fusion_pool(sqrt_price: u128) -> FusionPoolFacade {
@@ -223,6 +227,28 @@ mod order_book_tests {
             tick_spacing: 2,
             ..FusionPoolFacade::default()
         }
+    }
+
+    #[test]
+    fn test_order_book_price_step_too_small() {
+        let fusion_pool = test_fusion_pool(1 << 64);
+        let tick_arrays = test_tick_arrays();
+        let tick_sequence = TickArraySequence::new(tick_arrays, fusion_pool.tick_spacing).unwrap();
+
+        let result = get_order_book_side(&fusion_pool, &tick_sequence, 1.0e-14, 10, false, 6, 6);
+
+        assert_eq!(result.unwrap_err(), PRICE_STEP_TOO_SMALL);
+    }
+
+    #[test]
+    fn test_order_book_entry_limit_exceeded() {
+        let fusion_pool = test_fusion_pool(1 << 64);
+        let tick_arrays = test_tick_arrays();
+        let tick_sequence = TickArraySequence::new(tick_arrays, fusion_pool.tick_spacing).unwrap();
+
+        let result = get_order_book_side(&fusion_pool, &tick_sequence, 0.01, 101, false, 6, 6);
+
+        assert_eq!(result.unwrap_err(), ORDER_BOOK_ENTRY_LIMIT_EXCEEDED);
     }
 
     fn test_tick_array(start_tick_index: i32, initialized: bool) -> TickArrayFacade {

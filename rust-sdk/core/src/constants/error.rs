@@ -68,3 +68,9 @@ pub const INVALID_TICK_ARRAY_SEQUENCE: CoreError = "Invalid tick array sequence"
 
 #[cfg_attr(feature = "wasm", wasm_expose)]
 pub const LIMIT_ORDER_AND_POOL_ARE_OUT_OF_SYNC: CoreError = "Limit order and pool/ticks data are out of sync";
+
+#[cfg_attr(feature = "wasm", wasm_expose)]
+pub const PRICE_STEP_TOO_SMALL: CoreError = "Price step is too small";
+
+#[cfg_attr(feature = "wasm", wasm_expose)]
+pub const ORDER_BOOK_ENTRY_LIMIT_EXCEEDED: CoreError = "Order book entry limit exceeded";
