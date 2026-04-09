@@ -21,25 +21,25 @@ solana-v1 = []
 
 [dependencies]
 # Solana
-solana-rpc-client = { version = "^2.2" }
-solana-rpc-client-api = { version = "^2.2" }
-solana-account-decoder = { version = "^2.2" }
-solana-account = { version = "^2.2" }
-solana-program = { version = "^2.2" }
-solana-pubkey = { version = "^2.2" }
-solana-program-entrypoint = { version = "^2.2" }
-solana-decode-error = { version = "^2.2" }
-solana-program-error = { version = "^2.2" }
-solana-msg = { version = "^2.2" }
-solana-instruction = { version = "^2.2" }
-solana-cpi = { version = "^2.2" }
-solana-account-info = { version = "^2.2" }
+solana-rpc-client = { version = "^3.1" }
+solana-rpc-client-api = { version = "^3.1" }
+solana-account-decoder = { version = "^3.1" }
+solana-account = { version = "^3.0" }
+solana-program = { version = "^3.0" }
+solana-pubkey = { version = "^3.0" }
+solana-program-entrypoint = { version = "^3.1" }
+solana-decode-error = { version = "^2.3" }
+solana-program-error = { version = "^3.0" }
+solana-msg = { version = "^3.0" }
+solana-instruction = { version = "^3.4" }
+solana-cpi = { version = "^3.1" }
+solana-account-info = { version = "^3.1" }
 
 # Anchor
-anchor-lang = { version = ">=0.28, <0.32", optional = true }
+anchor-lang = { version = "1.0.0", optional = true }
 
 # Other dependencies
-borsh = { version = "^0.10" }
+borsh = { version = "^1.5", features = ["derive"] }
 num-derive = { version = "^0.4" }
 num-traits = { version = "^0.2" }
 fusionamm-core = { path = "../core", optional = true }
