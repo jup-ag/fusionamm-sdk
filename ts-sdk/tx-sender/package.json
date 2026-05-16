@@ -26,6 +26,9 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --sourcemap",
+    "lint": "pnpm eslint && pnpm type-check",
+    "eslint": "eslint \"**/*.ts*\" --fix",
+    "type-check": "tsc -p .",
     "clean": "rimraf dist"
   },
   "dependencies": {
@@ -37,9 +40,11 @@
     "@solana/rpc-api": "^2.1.0"
   },
   "devDependencies": {
+    "@crypticdot/typescript-config": "^1.0.0",
     "@crypticdot/eslint-config": "^1.0.0",
     "@crypticdot/prettier-config": "^1.0.0",
     "tsup": "^8.4.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "rimraf": "^6.0.1"
   }
 }

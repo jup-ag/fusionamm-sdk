@@ -13,6 +13,7 @@ mod generated;
 
 mod consts;
 mod pda;
+mod state;
 
 #[cfg(feature = "fetch")]
 mod gpa;
@@ -35,6 +36,7 @@ pub(crate) use generated::*;
 
 pub use consts::*;
 pub use pda::*;
+pub use state::*;
 
 #[cfg(feature = "fetch")]
 pub use gpa::*;

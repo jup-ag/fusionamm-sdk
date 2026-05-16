@@ -9,8 +9,9 @@
 //
 
 import { describe, it } from "vitest";
-import type { Position, TickArray, FusionPool } from "../../client/src";
-import type { PositionFacade, TickArrayFacade, FusionPoolFacade } from "../dist/nodejs/fusionamm_core_js_bindings";
+
+import type { FusionPool, Position, TickArray } from "../../client/src";
+import type { FusionPoolFacade, PositionFacade, TickArrayFacade } from "../dist/nodejs/fusionamm_core_js_bindings";
 
 // Since these tests are only for type checking, nothing actually happens at runtime.
 

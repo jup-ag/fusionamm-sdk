@@ -1,5 +1,35 @@
 # @crypticdot/fusionamm-client
 
+## 1.1.1
+
+## 1.1.0
+
+### Minor Changes
+
+- 09dc355: Sparse tick arrays
+
+## 1.0.83
+
+## 1.0.82
+
+### Patch Changes
+
+- 9a3dd78: Position locking
+
+## 1.0.81
+
+## 1.0.80
+
+### Patch Changes
+
+- 1efc1d5: Linter setup
+
+## 1.0.79
+
+## 1.0.78
+
+## 1.0.77
+
 ## 1.0.76
 
 ## 1.0.75

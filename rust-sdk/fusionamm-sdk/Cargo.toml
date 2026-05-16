@@ -43,6 +43,7 @@ spl-associated-token-account = { version = ">=2.0, <8.0", features = ["no-entryp
 bincode = { version = "^1.3" }
 serde = { version = "^1.0" }
 serde_json = { version = "^1.0" }
+log = "0.4.27"
 
 [dev-dependencies]
 serial_test = { version = "^3.1" }

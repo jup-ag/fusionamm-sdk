@@ -7,10 +7,11 @@ import {
   swapQuoteByOutputToken,
 } from "@crypticdot/fusionamm-core";
 import { fetchTickArrayOrDefault, SLIPPAGE_TOLERANCE_BPS } from "@crypticdot/fusionamm-sdk";
+import { Flags } from "@oclif/core";
+import { fetchMint } from "@solana-program/token-2022";
+
 import BaseCommand, { addressArg, bigintFlag } from "../base";
 import { rpc } from "../rpc";
-import { fetchMint } from "@solana-program/token-2022";
-import { Flags } from "@oclif/core";
 
 export default class SwapQuote extends BaseCommand {
   static override args = {

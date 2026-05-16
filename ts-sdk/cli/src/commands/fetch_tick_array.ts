@@ -1,8 +1,9 @@
 import { fetchMaybeFusionPool, fetchMaybeTickArray, getTickArrayAddress } from "@crypticdot/fusionamm-client";
+import { _TICK_ARRAY_SIZE, getTickArrayStartTickIndex, getTickIndexInArray } from "@crypticdot/fusionamm-core";
+import { Flags } from "@oclif/core";
+
 import BaseCommand, { addressArg, addressFlag } from "../base";
 import { rpc } from "../rpc";
-import { _TICK_ARRAY_SIZE, getTickArrayStartTickIndex, getTickIndexInArray } from "@crypticdot/fusionamm-core";
-import { Args, Flags } from "@oclif/core";
 
 export default class FetchTickArray extends BaseCommand {
   static override args = {

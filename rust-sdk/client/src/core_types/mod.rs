@@ -8,8 +8,11 @@
 // See the LICENSE file in the project root for license information.
 //
 
+mod fixed_tick_array;
 mod fusion_pool;
 mod limit_order;
 mod position;
+mod sparse_tick_array;
+mod tick;
 mod tick_array;
 mod tick_range;

@@ -8,9 +8,25 @@
 // See the LICENSE file in the project root for license information.
 //
 
+import type { FusionPool } from "@crypticdot/fusionamm-client";
+import {
+  AccountsType,
+  fetchAllMaybeTickArray,
+  fetchFusionPool,
+  getSwapInstruction,
+  getTickArrayAddress,
+} from "@crypticdot/fusionamm-client";
+import type { ExactInSwapQuote, ExactOutSwapQuote, TickArrayFacade, TransferFee } from "@crypticdot/fusionamm-core";
+import {
+  _TICK_ARRAY_SIZE,
+  getTickArrayStartTickIndex,
+  swapQuoteByInputToken,
+  swapQuoteByOutputToken,
+} from "@crypticdot/fusionamm-core";
 import type {
   Account,
-  Address, FetchAccountsConfig,
+  Address,
+  FetchAccountsConfig,
   GetAccountInfoApi,
   GetEpochInfoApi,
   GetMinimumBalanceForRentExemptionApi,
@@ -20,25 +36,11 @@ import type {
   TransactionSigner,
 } from "@solana/kit";
 import { AccountRole, lamports } from "@solana/kit";
-import { FUNDER, SLIPPAGE_TOLERANCE_BPS } from "./config";
-import type { ExactInSwapQuote, ExactOutSwapQuote, TickArrayFacade, TransferFee } from "@crypticdot/fusionamm-core";
-import {
-  _TICK_ARRAY_SIZE,
-  getTickArrayStartTickIndex,
-  swapQuoteByInputToken,
-  swapQuoteByOutputToken,
-} from "@crypticdot/fusionamm-core";
-import type { FusionPool } from "@crypticdot/fusionamm-client";
-import {
-  AccountsType,
-  fetchAllMaybeTickArray,
-  fetchFusionPool,
-  getSwapInstruction,
-  getTickArrayAddress,
-} from "@crypticdot/fusionamm-client";
-import { getCurrentTransferFee, prepareTokenAccountsInstructions } from "./token";
 import { MEMO_PROGRAM_ADDRESS } from "@solana-program/memo";
 import { fetchAllMint } from "@solana-program/token-2022";
+
+import { FUNDER, SLIPPAGE_TOLERANCE_BPS } from "./config";
+import { getCurrentTransferFee, prepareTokenAccountsInstructions } from "./token";
 
 // TODO: allow specify number as well as bigint
 // TODO: transfer hook

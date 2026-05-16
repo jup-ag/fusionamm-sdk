@@ -1,40 +1,57 @@
-//
-// Copyright (c) Cryptic Dot
-//
-// Modification based on Orca Whirlpools (https://github.com/orca-so/whirlpools),
-// originally licensed under the Apache License, Version 2.0, prior to February 26, 2025.
-//
-// Modifications licensed under FusionAMM SDK Source-Available License v1.0
-// See the LICENSE file in the project root for license information.
-//
-
-use fusionamm_core::{TickArrayFacade, TickFacade};
-
-use crate::{Tick, TickArray};
+use crate::{SparseTickArray, TickArray};
+use fusionamm_core::TickArrayFacade;
 
 impl From<TickArray> for TickArrayFacade {
     fn from(val: TickArray) -> Self {
-        TickArrayFacade {
-            start_tick_index: val.start_tick_index,
-            ticks: val.ticks.map(|tick| tick.into()),
-        }
+        SparseTickArray::from(val).into()
     }
 }
 
-impl From<Tick> for TickFacade {
-    fn from(val: Tick) -> Self {
-        TickFacade {
-            liquidity_net: val.liquidity_net,
-            liquidity_gross: val.liquidity_gross,
-            initialized: val.initialized,
-            fee_growth_outside_a: val.fee_growth_outside_a,
-            fee_growth_outside_b: val.fee_growth_outside_b,
-            age: val.age,
-            open_orders_input: val.open_orders_input,
-            part_filled_orders_input: val.part_filled_orders_input,
-            part_filled_orders_remaining_input: val.part_filled_orders_remaining_input,
-            fulfilled_a_to_b_orders_input: val.fulfilled_a_to_b_orders_input,
-            fulfilled_b_to_a_orders_input: val.fulfilled_b_to_a_orders_input,
-        }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{MaybeTick, TickData, SPARSE_TICK_ARRAY_DISCRIMINATOR};
+    use solana_program::pubkey::Pubkey;
+
+    #[test]
+    fn test_sparse_tick_array_to_facade() {
+        let mut ticks: [MaybeTick; 88] = std::array::from_fn(|_| MaybeTick::Uninitialized);
+
+        ticks[1] = MaybeTick::Initialized(TickData {
+            liquidity_net: 1,
+            liquidity_gross: 2,
+            fee_growth_outside_a: 3,
+            fee_growth_outside_b: 4,
+            age: 5,
+            open_orders_input: 6,
+            part_filled_orders_input: 7,
+            part_filled_orders_remaining_input: 8,
+            fulfilled_a_to_b_orders_input: 9,
+            fulfilled_b_to_a_orders_input: 10,
+        });
+
+        let sparse_tick_array = SparseTickArray {
+            discriminator: SPARSE_TICK_ARRAY_DISCRIMINATOR,
+            start_tick_index: 176,
+            fusion_pool: Pubkey::new_unique(),
+            ticks,
+        };
+
+        let tick_array = TickArray::from(sparse_tick_array);
+
+        let facade: TickArrayFacade = tick_array.into();
+
+        assert_eq!(facade.start_tick_index, 176);
+        assert!(facade.ticks[1].initialized);
+        assert_eq!(facade.ticks[1].liquidity_net, 1);
+        assert_eq!(facade.ticks[1].liquidity_gross, 2);
+        assert_eq!(facade.ticks[1].fee_growth_outside_a, 3);
+        assert_eq!(facade.ticks[1].fee_growth_outside_b, 4);
+        assert_eq!(facade.ticks[1].age, 5);
+        assert_eq!(facade.ticks[1].open_orders_input, 6);
+        assert_eq!(facade.ticks[1].part_filled_orders_input, 7);
+        assert_eq!(facade.ticks[1].part_filled_orders_remaining_input, 8);
+        assert_eq!(facade.ticks[1].fulfilled_a_to_b_orders_input, 9);
+        assert_eq!(facade.ticks[1].fulfilled_b_to_a_orders_input, 10);
     }
 }

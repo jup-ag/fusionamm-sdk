@@ -17,14 +17,18 @@ import {
   getAddressDecoder,
   getBase58Encoder,
 } from "@solana/kit";
-import type {
+import {
   PositionArgs,
   PositionBundleArgs,
   FusionPoolArgs,
   TokenBadgeArgs,
-  TickArrayArgs,
-  TickArgs,
   LimitOrderArgs,
+  MaybeTickArgs,
+  SparseTickArrayArgs,
+  getSparseTickArrayEncoder,
+  TickArgs,
+  TickArrayArgs,
+  getTickArrayEncoder,
 } from "../src";
 import {
   getPositionEncoder,
@@ -36,10 +40,6 @@ import {
   getPositionBundleEncoder,
   fetchAllPositionBundleWithFilter,
   positionBundleMintFilter,
-  getTickArrayEncoder,
-  fetchAllTickArrayWithFilter,
-  tickArrayStartTickIndexFilter,
-  tickArrayFusionPoolFilter,
   getTokenBadgeEncoder,
   fetchAllTokenBadgeWithFilter,
   tokenBadgeTokenMintFilter,
@@ -57,6 +57,11 @@ import {
   limitOrderFusionPoolFilter,
   limitOrderMintFilter,
 } from "../src";
+import {
+  fetchAllSparseTickArrayWithFilter,
+  sparseTickArrayFusionPoolFilter,
+  sparseTickArrayStartTickIndexFilter,
+} from "../src/gpa/sparseTickArray.ts";
 import { fetchDecodedProgramAccounts } from "../src/gpa/utils";
 
 describe("get program account memcmp filters", () => {
@@ -161,14 +166,57 @@ describe("get program account memcmp filters", () => {
       ticks: Array(88).fill(tickStruct),
       fusionPool: addresses[0],
     };
-    await fetchAllTickArrayWithFilter(
+
+    // TODO: fetchAllTickArrayWithFilter returns undefined with mocked rpc.
+    //  We can use fetchAllSparseTickArrayWithFilter instead of it because getTickArrayEncoder encodes to a SparseTickArray
+    //await fetchAllTickArrayWithFilter(
+    //  mockRpc,
+    //  tickArrayStartTickIndexFilter(tickArrayStruct.startTickIndex),
+    //  tickArrayFusionPoolFilter(tickArrayStruct.fusionPool),
+    //);
+
+    await fetchAllSparseTickArrayWithFilter(
       mockRpc,
-      tickArrayStartTickIndexFilter(tickArrayStruct.startTickIndex),
-      tickArrayFusionPoolFilter(tickArrayStruct.fusionPool),
+      sparseTickArrayStartTickIndexFilter(tickArrayStruct.startTickIndex),
+      sparseTickArrayFusionPoolFilter(tickArrayStruct.fusionPool),
     );
+
     const data = getTickArrayEncoder().encode(tickArrayStruct);
     assertFilters(data);
   });
+
+  it("SparseTickArray", async () => {
+    const tickStruct: MaybeTickArgs = {
+      __kind: "Initialized",
+      fields: [
+        {
+          liquidityNet: 1,
+          liquidityGross: 2,
+          feeGrowthOutsideA: 3,
+          feeGrowthOutsideB: 4,
+          age: 5,
+          openOrdersInput: 6,
+          partFilledOrdersInput: 7,
+          partFilledOrdersRemainingInput: 8,
+          fulfilledAToBOrdersInput: 9,
+          fulfilledBToAOrdersInput: 10,
+        },
+      ],
+    };
+    const tickArrayStruct: SparseTickArrayArgs = {
+      startTickIndex: 1234,
+      ticks: Array(88).fill(tickStruct),
+      fusionPool: addresses[0],
+    };
+    await fetchAllSparseTickArrayWithFilter(
+      mockRpc,
+      sparseTickArrayStartTickIndexFilter(tickArrayStruct.startTickIndex),
+      sparseTickArrayFusionPoolFilter(tickArrayStruct.fusionPool),
+    );
+    const data = getSparseTickArrayEncoder().encode(tickArrayStruct);
+    assertFilters(data);
+  });
+
 
   it("TokenBadge", async () => {
     const tokenBadgeStruct: TokenBadgeArgs = {

@@ -1546,6 +1546,7 @@ dependencies = [
  "fusionamm-client",
  "fusionamm-core",
  "lazy_static",
+ "log",
  "rstest",
  "serde",
  "serde_json",

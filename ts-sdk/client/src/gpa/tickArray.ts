@@ -1,39 +1,37 @@
-//
-// Copyright (c) Cryptic Dot
-//
-// Modification based on Orca Whirlpools (https://github.com/orca-so/whirlpools),
-// originally licensed under the Apache License, Version 2.0, prior to February 26, 2025.
-//
-// Modifications licensed under FusionAMM SDK Source-Available License v1.0
-// See the LICENSE file in the project root for license information.
-//
+import type { Account, Address, GetProgramAccountsApi, Rpc } from "@solana/kit";
 
-import type { Account, Address, GetProgramAccountsApi, GetProgramAccountsMemcmpFilter, Rpc } from "@solana/kit";
-import { getAddressEncoder, getBase58Decoder, getI32Encoder } from "@solana/kit";
-import { TickArray, TICK_ARRAY_DISCRIMINATOR, FUSIONAMM_PROGRAM_ADDRESS, getTickArrayDecoder } from "../generated";
-import { fetchDecodedProgramAccounts } from "./utils";
+import { consolidateTickArray, TickArray } from "../state";
 
-export type TickArrayFilter = GetProgramAccountsMemcmpFilter & {
+import type { FixedTickArrayFilter } from "./fixedTickArray";
+import {
+  fetchAllFixedTickArrayWithFilter,
+  fixedTickArrayFusionPoolFilter,
+  fixedTickArrayStartTickIndexFilter,
+} from "./fixedTickArray";
+import type { SparseTickArrayFilter } from "./sparseTickArray";
+import {
+  fetchAllSparseTickArrayWithFilter,
+  sparseTickArrayFusionPoolFilter,
+  sparseTickArrayStartTickIndexFilter,
+} from "./sparseTickArray";
+
+export type TickArrayFilter = {
+  fixed: FixedTickArrayFilter;
+  sparse: SparseTickArrayFilter;
   readonly __kind: unique symbol;
 };
 
 export function tickArrayStartTickIndexFilter(startTickIndex: number): TickArrayFilter {
   return {
-    memcmp: {
-      offset: 8n,
-      bytes: getBase58Decoder().decode(getI32Encoder().encode(startTickIndex)),
-      encoding: "base58",
-    },
+    fixed: fixedTickArrayStartTickIndexFilter(startTickIndex),
+    sparse: sparseTickArrayStartTickIndexFilter(startTickIndex),
   } as TickArrayFilter;
 }
 
 export function tickArrayFusionPoolFilter(address: Address): TickArrayFilter {
   return {
-    memcmp: {
-      offset: 113n * 88n + 12n,
-      bytes: getBase58Decoder().decode(getAddressEncoder().encode(address)),
-      encoding: "base58",
-    },
+    fixed: fixedTickArrayFusionPoolFilter(address),
+    sparse: sparseTickArrayFusionPoolFilter(address),
   } as TickArrayFilter;
 }
 
@@ -41,18 +39,17 @@ export async function fetchAllTickArrayWithFilter(
   rpc: Rpc<GetProgramAccountsApi>,
   ...filters: TickArrayFilter[]
 ): Promise<Account<TickArray>[]> {
-  const discriminator = getBase58Decoder().decode(TICK_ARRAY_DISCRIMINATOR);
-  const discriminatorFilter: GetProgramAccountsMemcmpFilter = {
-    memcmp: {
-      offset: 0n,
-      bytes: discriminator,
-      encoding: "base58",
-    },
-  };
-  return fetchDecodedProgramAccounts(
-    rpc,
-    FUSIONAMM_PROGRAM_ADDRESS,
-    [discriminatorFilter, ...filters],
-    getTickArrayDecoder(),
-  );
+  const fixedAccounts = await fetchAllFixedTickArrayWithFilter(rpc, ...filters.map(filter => filter.fixed));
+  const sparseAccounts = await fetchAllSparseTickArrayWithFilter(rpc, ...filters.map(filter => filter.sparse));
+
+  const tickArrays: Account<TickArray>[] = [];
+
+  for (const account of fixedAccounts) {
+    tickArrays.push(consolidateTickArray(account));
+  }
+  for (const account of sparseAccounts) {
+    tickArrays.push(consolidateTickArray(account));
+  }
+
+  return tickArrays;
 }

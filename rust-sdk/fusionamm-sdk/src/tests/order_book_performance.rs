@@ -55,7 +55,7 @@ fn test_order_book_performance() {
     }*/
 }
 
-fn calc_order_book(pool: &FusionPool, tick_arrays: &Vec<TickArray>, decimals: (u8, u8)) {
+fn calc_order_book(pool: &FusionPool, tick_arrays: &[TickArray], decimals: (u8, u8)) {
     let sqrt_price = pool.sqrt_price;
 
     let pool_price = sqrt_price_to_price(sqrt_price, decimals.0, decimals.1);

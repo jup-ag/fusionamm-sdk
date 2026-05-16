@@ -1,5 +1,31 @@
 # @crypticdot/fusionamm-rust
 
+## 1.1.1
+
+## 1.1.0
+
+### Minor Changes
+
+- 09dc355: Sparse tick arrays
+
+## 1.0.83
+
+## 1.0.82
+
+## 1.0.81
+
+## 1.0.80
+
+## 1.0.79
+
+## 1.0.78
+
+## 1.0.77
+
+### Patch Changes
+
+- d835100: Updated seed generation for create_account_with_seed
+
 ## 1.0.76
 
 ## 1.0.75

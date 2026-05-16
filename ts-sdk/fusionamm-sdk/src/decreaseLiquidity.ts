@@ -8,24 +8,24 @@
 // See the LICENSE file in the project root for license information.
 //
 
-import type {FusionPool} from "@crypticdot/fusionamm-client";
+import type { FusionPool } from "@crypticdot/fusionamm-client";
 import {
   fetchAllTickArray,
-  fetchPosition,
   fetchFusionPool,
+  fetchPosition,
   getClosePositionInstruction,
   getCollectFeesInstruction,
   getDecreaseLiquidityInstruction,
   getPositionAddress,
   getTickArrayAddress,
 } from "@crypticdot/fusionamm-client";
-import type {CollectFeesQuote, DecreaseLiquidityQuote, TickRange, TransferFee} from "@crypticdot/fusionamm-core";
+import type { CollectFeesQuote, DecreaseLiquidityQuote, TickRange, TransferFee } from "@crypticdot/fusionamm-core";
 import {
-  getTickArrayStartTickIndex,
+  collectFeesQuote,
   decreaseLiquidityQuote,
   decreaseLiquidityQuoteA,
   decreaseLiquidityQuoteB,
-  collectFeesQuote,
+  getTickArrayStartTickIndex,
   getTickIndexInArray,
 } from "@crypticdot/fusionamm-core";
 import type {
@@ -38,12 +38,13 @@ import type {
   Rpc,
   TransactionSigner,
 } from "@solana/kit";
-import {DEFAULT_ADDRESS, FUNDER, SLIPPAGE_TOLERANCE_BPS} from "./config";
-import {findAssociatedTokenPda} from "@solana-program/token";
-import {getCurrentTransferFee, prepareTokenAccountsInstructions} from "./token";
-import {fetchAllMint, fetchAllMaybeMint, TOKEN_2022_PROGRAM_ADDRESS} from "@solana-program/token-2022";
-import {MEMO_PROGRAM_ADDRESS} from "@solana-program/memo";
+import { MEMO_PROGRAM_ADDRESS } from "@solana-program/memo";
+import { findAssociatedTokenPda } from "@solana-program/token";
+import { fetchAllMaybeMint, fetchAllMint, TOKEN_2022_PROGRAM_ADDRESS } from "@solana-program/token-2022";
 import assert from "assert";
+
+import { DEFAULT_ADDRESS, FUNDER, SLIPPAGE_TOLERANCE_BPS } from "./config";
+import { getCurrentTransferFee, prepareTokenAccountsInstructions } from "./token";
 
 // TODO: allow specify number as well as bigint
 // TODO: transfer hook
@@ -55,17 +56,17 @@ import assert from "assert";
  */
 export type DecreaseLiquidityQuoteParam =
   | {
-  /** The amount of liquidity to decrease.*/
-  liquidity: bigint;
-}
+      /** The amount of liquidity to decrease.*/
+      liquidity: bigint;
+    }
   | {
-  /** The amount of Token A to withdraw.*/
-  tokenA: bigint;
-}
+      /** The amount of Token A to withdraw.*/
+      tokenA: bigint;
+    }
   | {
-  /** The amount of Token B to withdraw.*/
-  tokenB: bigint;
-};
+      /** The amount of Token B to withdraw.*/
+      tokenB: bigint;
+    };
 
 /**
  * Represents the instructions and quote for decreasing liquidity in a position.
@@ -201,7 +202,7 @@ export async function decreaseLiquidityInstructions(
     getTickArrayAddress(fusionPool.address, upperTickArrayStartIndex).then(x => x[0]),
   ]);
 
-  const {createInstructions, cleanupInstructions, tokenAccountAddresses} = await prepareTokenAccountsInstructions(
+  const { createInstructions, cleanupInstructions, tokenAccountAddresses } = await prepareTokenAccountsInstructions(
     rpc,
     authority,
     [fusionPool.data.tokenMintA, fusionPool.data.tokenMintB],
@@ -235,7 +236,7 @@ export async function decreaseLiquidityInstructions(
 
   instructions.push(...cleanupInstructions);
 
-  return {quote, instructions};
+  return { quote, instructions };
 }
 
 /**
@@ -306,7 +307,7 @@ export async function closePositionInstructions(
   const transferFeeB = getCurrentTransferFee(mintB, currentEpoch.epoch);
 
   const quote = getDecreaseLiquidityQuote(
-    {liquidity: position.data.liquidity},
+    { liquidity: position.data.liquidity },
     fusionPool.data,
     position.data,
     slippageToleranceBps,
@@ -338,11 +339,11 @@ export async function closePositionInstructions(
   const lowerTick =
     lowerTickArray.data.ticks[
       getTickIndexInArray(position.data.tickLowerIndex, lowerTickArrayStartIndex, fusionPool.data.tickSpacing)
-      ];
+    ];
   const upperTick =
     upperTickArray.data.ticks[
       getTickIndexInArray(position.data.tickUpperIndex, upperTickArrayStartIndex, fusionPool.data.tickSpacing)
-      ];
+    ];
 
   const feesQuote = collectFeesQuote(fusionPool.data, position.data, lowerTick, upperTick, transferFeeA, transferFeeB);
 
@@ -352,7 +353,7 @@ export async function closePositionInstructions(
     requiredMints.add(fusionPool.data.tokenMintB);
   }
 
-  const {createInstructions, cleanupInstructions, tokenAccountAddresses} = await prepareTokenAccountsInstructions(
+  const { createInstructions, cleanupInstructions, tokenAccountAddresses } = await prepareTokenAccountsInstructions(
     rpc,
     authority,
     Array.from(requiredMints),
