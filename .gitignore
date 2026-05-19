@@ -12,6 +12,7 @@ sdk/node_modules
 dist
 artifacts
 generated/
+!rust-sdk/client/src/generated/
 .docusaurus
 .cache-loader
 .devcontainer
