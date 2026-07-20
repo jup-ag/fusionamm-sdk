@@ -21,12 +21,12 @@ solana-v1 = []
 
 [dependencies]
 # Solana
-solana-rpc-client = { version = "^3.1" }
-solana-rpc-client-api = { version = "^3.1" }
-solana-account-decoder = { version = "^3.1" }
-solana-account = { version = "^3.0" }
-solana-program = { version = "^3.0" }
-solana-pubkey = { version = "^3.0" }
+solana-rpc-client = { version = "4.1.2" }
+solana-rpc-client-api = { version = "4.1.2" }
+solana-account-decoder = { version = "4.1.2" }
+solana-account = { version = "^4.3" }
+solana-program = { version = "^4.0" }
+solana-pubkey = { version = "^4.2" }
 solana-program-entrypoint = { version = "^3.1" }
 solana-decode-error = { version = "^2.3" }
 solana-program-error = { version = "^3.0" }
